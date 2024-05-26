@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import { ReactComponent as ThemeIcon_1 } from "../../img/beach.svg";
 import { ReactComponent as ThemeIcon_2 } from "../../img/island.svg";
 import { ReactComponent as ThemeIcon_3 } from "../../img/mountain.svg";

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
 import { ReactComponent as Home } from "../../img/home.svg";
-import DetailModal from "./DetailModal";
+
 
 const DetailedSearch = ({
   fetchBeachData,

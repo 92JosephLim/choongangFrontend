@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, {useEffect, useCallback, useRef } from "react";
 import { MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
 
 function MapMarkerWithOverlay({ marker, index, openIndex, setOpenIndex }) {

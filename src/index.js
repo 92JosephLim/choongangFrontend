@@ -3,18 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Map } from 'react-kakao-maps-sdk';
-import WeatherAPI from './pages/todo/WeatherAPI'
+import { Provider } from 'react-redux';
+import store from './pages/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-{/* <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a361124d9eb19be66eb321bfd64d8ee2&libraries=services,clusterer,drawing&autoload=false"></script> */}
 root.render(
   <React.StrictMode>
-    <App />
-    
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
-  // <WeatherAPI />
-  
 );
 
 // If you want to start measuring performance in your app, pass a function

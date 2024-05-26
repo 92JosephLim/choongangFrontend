@@ -45,15 +45,14 @@ const DetailModal = ({ fetchDetailData, handleSubmit }) => {
       [group]: {
         ...prevFormData[group],
         [`d_${key}`]: checked,
-        
       },
     }));
   };
 
   return (
-    <div id="campingDetail" >  
+    <div id="campingDetail" data-fetch-detail-data={fetchDetailData}>  
       <form id="searchdetailform" onSubmit={searchDetailSubmit}>
-        <div id="campingDetailLocation" className="border-2 grid grid-cols-3 md:grid-cols-5 my-3 mx-3 border-black text-sm  text-black">
+        <div id="campingDetailLocation" className="border-2 grid grid-cols-3 md:grid-cols-5 my-3 mx-3 border-black text-sm text-black">
           <p className="col-span-3 md:col-span-5 ml-3">입지구분</p>
           {['해변', '섬', '산', '숲', '계곡', '강', '호수', '도심'].map((label, index) => {
             const id = `d200_d_d20${index + 1}`;
@@ -65,7 +64,7 @@ const DetailModal = ({ fetchDetailData, handleSubmit }) => {
             );
           })}
         </div>
-        <div id="campingDetailLocation" className="border-2 grid grid-cols-3 md:grid-cols-5 my-3 mx-3 border-black text-sm  text-black">
+        <div id="campingDetailLocation" className="border-2 grid grid-cols-3 md:grid-cols-5 my-3 mx-3 border-black text-sm text-black">
           <p className="col-span-3 md:col-span-5 ml-3">주요시설</p>
           {['일반야영장', '글램핑', '카라반', '자동차야영장'].map((label, index) => {
             const id = `d300_d_d30${index + 1}`;
@@ -77,7 +76,7 @@ const DetailModal = ({ fetchDetailData, handleSubmit }) => {
             );
           })}
         </div>
-        <div id="campingDetailLocation" className="border-2 grid grid-cols-3 md:grid-cols-5 my-3 mx-3 border-black text-sm  text-black">
+        <div id="campingDetailLocation" className="border-2 grid grid-cols-3 md:grid-cols-5 my-3 mx-3 border-black text-sm text-black">
           <p className="col-span-3 md:col-span-5 ml-3">바닥형태</p>
           {['잔디', '파쇄석', '데크', '자갈', '맨흙'].map((label, index) => {
             const id = `d400_d_d40${index + 1}`;
@@ -89,19 +88,19 @@ const DetailModal = ({ fetchDetailData, handleSubmit }) => {
             );
           })}
         </div>
-        <div id="campingDetailLocation" className="border-2 grid grid-cols-3 md:grid-cols-5 my-3 mx-3 border-black text-sm  text-black">
+        <div id="campingDetailLocation" className="border-2 grid grid-cols-3 md:grid-cols-5 my-3 mx-3 border-black text-sm text-black">
           <p className="col-span-3 md:col-span-5 ml-3">테마별</p>
           {['일출명소', '일몰명소', '수상레저', '항공레저', '스키', '낚시', '액티비티', '봄꽃여행', '여름물놀이', '단풍명소', '눈꽃명소'].map((label, index) => {
             const id = `d500_d_d50${index + 1}`;
             return (
               <div key={id} className="grid grid-cols-3">
                 <input id={id} type="checkbox" className="col-span-1 h-3 mx-1 my-2" onChange={handleCheckboxChange} />
-                <label htmlFor={id} className="col-span-2 mr-1 text-left" >{label}</label>
+                <label htmlFor={id} className="col-span-2 mr-1 text-left">{label}</label>
               </div>
             );
           })}
         </div>
-        <div id="campingDetailLocation" className="border-2 grid grid-cols-3 md:grid-cols-5 my-3 mx-3 border-black text-sm  text-black">
+        <div id="campingDetailLocation" className="border-2 grid grid-cols-3 md:grid-cols-5 my-3 mx-3 border-black text-sm text-black">
           <p className="col-span-3 md:col-span-5 ml-3">부대시설</p>
           {['전기', '무선인터넷', '장작판매', '온수', '트렘폴린', '물놀이장', '놀이터', '산책로', '운동장', '운동시설', '편의점', '덤프스테이션'].map((label, index) => {
             const id = `d600_d_d60${index + 1}`;
@@ -113,13 +112,13 @@ const DetailModal = ({ fetchDetailData, handleSubmit }) => {
             );
           })}
         </div>
-        <div id="campingDetailLocation" className="border-2 grid grid-cols-3 md:grid-cols-5 my-3 mx-3 border-black text-sm  text-black">
+        <div id="campingDetailLocation" className="border-2 grid grid-cols-3 md:grid-cols-5 my-3 mx-3 border-black text-sm text-black">
           {['개인 트레일러 입장가능', '개인 캠핑카 입장가능', '반려동물 동반가능'].map((label, index) => {
             const id = `d700_d_d70${index + 1}`;
             return (
               <div key={id} className="col-span-3 grid grid-cols-3">
                 <input id={id} type="checkbox" className="col-span-1 h-3 mx-1 my-2" onChange={handleCheckboxChange} />
-                <label htmlFor={id} className="col-span-2  text-left">{label}</label>
+                <label htmlFor={id} className="col-span-2 text-left">{label}</label>
               </div>
             );
           })}

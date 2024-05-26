@@ -1,89 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { getList2 } from "../../api/openWeather";
-import TestLogo from "../../img/logo.png";
-import LocationIcon from "../../img/location.png";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchWeatherData, setSelectedCity, setSelectedDate } from '../../pages/weatherSlice'; // 올바른 경로로 수정
+import TestLogo from '../../img/logo.png';
+import LocationIcon from '../../img/location.png';
+import { Link } from 'react-router-dom';
 
-const ReadOpenWeatherComponentOneDay = ({ selectedCity, setSelectedCity }) => {
-  const formatDate = (date) => {
-    let d = new Date(date),
-      month = "" + (d.getMonth() + 1),
-      day = "" + d.getDate(),
-      year = d.getFullYear();
-
-    if (month.length < 2) month = "0" + month;
-    if (day.length < 2) day = "0" + day;
-
-    return [year, month, day].join("-");
-  };
-
-  const [serverData, setServerData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(formatDate(new Date()));
+const ReadOpenWeatherComponentOneDay = () => {
+  const dispatch = useDispatch();
+  const { data, selectedCity, selectedDate, loading, error } = useSelector((state) => state.weather);
   const [showLocationButtons, setShowLocationButtons] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const data = await getList2();
-        const todayData = filterTodayData(data);
-        setServerData(todayData);
-        localStorage.setItem("serverData", JSON.stringify(todayData));
-        const secondCity = getSecondCity(todayData);
-        setSelectedCity(secondCity);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    const storedData = JSON.parse(localStorage.getItem("serverData"));
-    if (storedData) {
-      const todayData = filterTodayData(storedData);
-      setServerData(todayData);
-      const secondCity = getSecondCity(todayData);
-      setSelectedCity(secondCity);
-      setLoading(false);
-    } else {
-      fetchData();
-    }
-  }, [selectedDate, setSelectedCity]);
-
-  const filterTodayData = (data) => {
-    const today = selectedDate;
-    return data.filter((item) => item.date === today);
-  };
-
-  const getSecondCity = (data) => {
-    const cityNames = Array.from(new Set(data.map((city) => city.urlKRName)));
-    if (cityNames.length >= 2) {
-      return cityNames[1];
-    } else {
-      return "";
-    }
-  };
+    dispatch(fetchWeatherData());
+  }, [dispatch]);
 
   const handleCityClick = (cityName) => {
-    setSelectedCity(cityName);
-  };
-
-  const toggleLocationButtonContainer = () => {
-    setShowLocationButtons(!showLocationButtons);
+    dispatch(setSelectedCity(cityName));
   };
 
   const handleDateChange = (e) => {
-    setSelectedDate(e.target.value);
+    dispatch(setSelectedDate(e.target.value));
   };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
-  const cityNames = Array.from(new Set(serverData.map((city) => city.urlKRName)));
-  const filteredData = serverData.filter((data) => data.urlKRName === selectedCity);
+  const cityNames = Array.from(new Set(data.map((city) => city.urlKRName)));
+  const filteredData = data.filter((item) => item.date === selectedDate && item.urlKRName === selectedCity);
 
   return (
     <div className="bg-[#12372A] w-full h-full m-0 p-0">
@@ -99,17 +42,14 @@ const ReadOpenWeatherComponentOneDay = ({ selectedCity, setSelectedCity }) => {
             src={LocationIcon}
             className="h-8 cursor-pointer"
             alt="Location Icon"
-            onClick={toggleLocationButtonContainer}
+            onClick={() => setShowLocationButtons(!showLocationButtons)}
           />
         </div>
 
         {filteredData.length > 0 ? (
-          <div className="grid grid-cols-1 ">
+          <div className="grid grid-cols-1">
             {filteredData.map((openWeather) => (
-              <div
-                key={openWeather.tno}
-                className="border bg-[#12372A] border-[#12372A] p-4 rounded-lg"
-              >
+              <div key={openWeather.tno} className="border bg-[#12372A] border-[#12372A] p-4 rounded-lg">
                 <input
                   type="date"
                   id="date"
@@ -118,19 +58,9 @@ const ReadOpenWeatherComponentOneDay = ({ selectedCity, setSelectedCity }) => {
                   className="p-2"
                 />
                 <div className="bg-slate-50">
-                  <h3 className="text-lg font-bold">
-                    {openWeather.urlKRName}의 날씨
-                  </h3>
-
-                  <h3 className="text-lg font-bold">
-                    🌛{Math.round(openWeather.minTemp)} °C 🌝{" "}
-                    {Math.round(openWeather.maxTemp)} °C
-                  </h3>
-
-                  <h3 className="text-lg font-bold">
-                    💧 {Math.round(openWeather.humidity)} % 💨{" "}
-                    {Math.round(openWeather.windSpeed)} m/s
-                  </h3>
+                  <h3 className="text-lg font-bold">{openWeather.urlKRName}의 날씨</h3>
+                  <h3 className="text-lg font-bold">🌛{Math.round(openWeather.minTemp)} °C 🌝 {Math.round(openWeather.maxTemp)} °C</h3>
+                  <h3 className="text-lg font-bold">💧 {Math.round(openWeather.humidity)} % 💨 {Math.round(openWeather.windSpeed)} m/s</h3>
                 </div>
               </div>
             ))}

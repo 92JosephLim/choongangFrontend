@@ -193,7 +193,7 @@ const ListComponent = ({ fetchFunctionName, setFetchFunctionName }) => {
                         className="col-start-1 col-span-8 text-black bg-[#b9b9ff]"
                       >
                         <Link
-                          to={`/read/${dataEntity.tno}`}
+                          to={`/read/${dataEntity.contentId}`}
                           className="w-full block"
                         >
                           <img

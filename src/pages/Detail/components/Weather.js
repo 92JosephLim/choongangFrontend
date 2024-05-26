@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { getList2 } from "../../../api/openWeather";
 
-const Weather = ({ gocamping }) => {
+const Weather = ({  }) => {
   const [serverData, setServerData] = useState([]); //30일
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCity, setSelectedCity] = useState(""); // 디폴트 값은 빈 문자열로 설정
-  const cityName = "서울";
+
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("serverData")); // 로컬 스토리지에서 데이터 가져오기
